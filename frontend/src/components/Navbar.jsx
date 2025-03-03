@@ -1,13 +1,12 @@
 import { Container, Flex, Text, HStack, Button } from "@chakra-ui/react"
+import { useColorMode } from "./ui/color-mode"
 import { Link } from "react-router-dom"
 import { CiSquarePlus } from "react-icons/ci"
 import { VscColorMode } from "react-icons/vsc"
 
 const Navbar = () => {
-  const toggleColorMode = () => {
-    
-  };
-
+  const { colorMode, setColorMode, toggleColorMode } = useColorMode();
+  
   return (
     <Container maxW={"1280px"} px={4}>
       <Flex
@@ -40,12 +39,10 @@ const Navbar = () => {
             </Button>
           </Link>
           <Button onClick={toggleColorMode}>
-            <VscColorMode fontSize={20} />
+            { colorMode === "light" ? "L" : "D"  }
           </Button>
         </HStack>
-
       </Flex>
-
     </Container>
   )
 }
