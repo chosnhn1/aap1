@@ -52,6 +52,35 @@ export const useProductStore = create((set) => ({
       success: true,
       message: "Deletion successed."
     };
+  },
+
+  updateProduct: async (pid, updatedProduct) => {
+    if (!updatedProduct.name || !updatedProduct.price || !updatedProduct.image) {
+      return {
+        success: false,
+        message: "Please fill all fields."
+      }
+    }
+
+    const response = await fetch(`/api/products/${pid}`, {  
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body:JSON.stringify(updatedProduct)
+    });
+    const data = await response.json();
+    if (!data.success) {
+      return {success: false, message: "Update failed."};
+    }
+
+    set((state) => ({
+      products: state.products.map((product) => (product._id === pid ? data.data : product)),
+    }));
+    return {
+      success: true,
+      message: "Product updated."
+    }
   }
 
 }))
