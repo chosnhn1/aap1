@@ -14,7 +14,6 @@ function App() {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/create" element={<CreatePage />}></Route>
       </Routes>
-      <Button>Count!</Button>
     </Box>
   )
 }

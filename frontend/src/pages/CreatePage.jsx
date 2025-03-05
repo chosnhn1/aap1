@@ -1,6 +1,7 @@
 import { Container, VStack, Heading, Box, Input, Button } from "@chakra-ui/react"
 import { useState } from "react"
 import { useColorModeValue } from "../components/ui/color-mode"
+import { Toaster, toaster } from "../components/ui/toaster"
 import { useProductStore } from "../store/product";
 
 const CreatePage = () => {
@@ -13,6 +14,19 @@ const CreatePage = () => {
   const {createProduct} = useProductStore()
   const handleAddProduct = async () => {
     const { success, message } = await createProduct(newProduct);
+    if (!success) {
+      toaster.create({
+        title: "Error",
+        description: message,
+        type: "error"
+      });
+    } else {
+      toaster.create({
+        title: "Success",
+        description: message,
+        type: "success"
+      });
+    }
     console.log("Success:", success);
     console.log("Message:", message);
   };
@@ -41,7 +55,7 @@ const CreatePage = () => {
         </Box>
       </VStack>
 
-      
+      <Toaster />
     </Container>
   )
 }
